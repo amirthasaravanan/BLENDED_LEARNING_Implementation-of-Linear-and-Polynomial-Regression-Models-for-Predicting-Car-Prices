@@ -51,60 +51,61 @@ from sklearn. pipeline import Pipeline
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib. pyplot as plt
 ```
-
 ```python
+# Load data
 df = pd.read_csv('encoded_car_data (1).csv')
 ```
-
 ```python
-X = df[['enginesize','horsepower','citympg','highwaympg']]
+# Select features & target
+X = df[['enginesize', 'horsepower', 'citympg', 'highwaympg']]
 y = df['price']
 ```
-
 ```python
+# Split data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+```python
+# 1. Linear Regression (with scaling)
 linear_model = Pipeline([
-    ('scaler',StandardScaler()),
-    ('model',LinearRegression())
-    
+    ('scaler', StandardScaler()),
+    ('model', LinearRegression())
 ])
-linear_model.fit(X_train,y_train)
+linear_model.fit(X_train, y_train)
 y_pred_linear = linear_model.predict(X_test)
 ```
-
 ```python
+# 2. Polynomial Regression (degree=2)
 poly_model = Pipeline([
-    ('poly',PolynomialFeatures(degree=2)),
-    ('scaler',StandardScaler()),
-    ('model',LinearRegression())
+    ('poly', PolynomialFeatures(degree=2)),
+    ('scaler', StandardScaler()),
+    ('model', LinearRegression())
 ])
-poly_model.fit(X_train,y_train)
-y_pred_poly=poly_model.predict(X_test)
+poly_model.fit(X_train, y_train)
+y_pred_poly = poly_model.predict(X_test)
 ```
-
 ```python
-print('AMIRTHA VARSHINI M')
-print('Reg NO: 212224230017 ')
-print("Linear Regression Model:")
-mse=mean_squared_error(y_test,y_pred_poly)
-print('MSE=',mean_squared_error(y_test,y_pred_poly))
-r2score=r2_score(y_test,y_pred_poly)
-print('R2 score=',r2score)
-
-
+# Evaluate models
+print('Name: AMIRTHA VARSHINI M')
+print('Reg. No: 212224230017')
+print("Linear Regression:")
+mse=mean_squared_error(y_test,y_pred_linear)
+print('MSE=', mean_squared_error(y_test,y_pred_linear))
+r2score=r2_score(y_test,y_pred_linear)
+print('R2 Score', r2score)
+print(f"MSE: {mean_squared_error(y_test, y_pred_linear):.2f}")
+print(f"R²: {r2_score(y_test, y_pred_linear):.2f}")
+print("\nPolynomial Regression:")
 print(f"MSE: {mean_squared_error(y_test, y_pred_poly):.2f}")
-print(f"R2 Score: {r2_score(y_test, y_pred_poly):.2f}")
-
-print("\nPolynomial Regression Model:")
-print(f"MSE: {mean_squared_error(y_test, y_pred_poly):.2f}")
-print(f"R² Score: {r2_score(y_test, y_pred_poly):.2f}")
-
+print(f"R²: {r2_score(y_test, y_pred_poly):.2f}")
+```
+```python
+# Plot actual vs predicted
 plt.figure(figsize=(10, 5))
-plt.scatter(y_test, y_pred_poly, label='Linear',alpha=0.6)
-plt.scatter(y_test,y_pred_poly,label='Polynomial (degree=2)',alpha=0.6)
-plt.plot([y.min(),y.max()],[y.min(),y.max()],'r--',label='Perfect Predicton')
-plt.xlabel('Actual Prices')
-plt.ylabel('Predicted Prices')
+plt.scatter(y_test, y_pred_linear, label='Linear', alpha=0.6)
+plt.scatter(y_test, y_pred_poly, label='Polynomial (degree=2)', alpha=0.6)
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--', label='Perfect Prediction')
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
 plt.title("Linear vs Polynomial Regression")
 plt.legend()
 plt.show()
@@ -112,8 +113,9 @@ plt.show()
 
 ## Output:
 ![simple linear regression model for predicting the marks scored](sam.png)
+<img width="1251" height="241" alt="Screenshot 2025-10-05 190924" src="https://github.com/user-attachments/assets/f41f3955-f848-400a-b2bb-e60131d73f63" />
+<img width="1258" height="588" alt="Screenshot 2025-10-05 191057" src="https://github.com/user-attachments/assets/3b070d69-4f31-4a2d-89bc-82412fa9ed6d" />
 
-<img width="1494" height="807" alt="Screenshot 2025-09-03 093757" src="https://github.com/user-attachments/assets/275ec55d-5760-4ece-9bca-64992b717f39" />
 
 
 ## Result:
